@@ -63,37 +63,31 @@ last_row_date_month = int(last_row_date[5:7])
 month_days = calendar.monthrange(
     int(last_row_date_year), int(last_row_date_month))[1]
 
-
+# create a new data frame for saving the whole month data
 month_report_df = pd.DataFrame(columns=column_name)
 
-#month_report_df = pd.DataFrame()
-
+# loop check every day data
 for i in range(1, month_days+1):
     selected_date = last_row_date[:4]+'-' + \
         last_row_date[5:7]+'-'+str(i).zfill(2)
 
-    temp_df=report_df.query("Date=='"+selected_date+"'")
-    
-    
+    # using query to check exist
+    temp_df = report_df.query("Date=='"+selected_date+"'")
+
+    # check data frame is empty
     if(temp_df.empty):
+        # create date only list
         month_report_df.loc[len(month_report_df)] = [selected_date, '0', '0']
     else:
-        temp_date=temp_df.iloc[0]["Date"]
-        temp_collect=str(temp_df.iloc[0]["Collected"])
-        temp_due=str(temp_df.iloc[0]["Due"])
-        #print(temp_due)
-        month_report_df.loc[len(month_report_df)] = [temp_date,temp_collect,temp_due]
+        # get the required data from first row
+        temp_date = temp_df.iloc[0]["Date"]
+        temp_collect = str(temp_df.iloc[0]["Collected"])
+        temp_due = str(temp_df.iloc[0]["Due"])
 
-    #print(str(i)+'--'+"Size = "+str(temp_df.empty))
-
-    #if(len(df_new) == 1):
-        #month_report_df.loc[len(month_report_df)] = df_new
-    #else:
-        #month_report_df.loc[len(month_report_df)] = [selected_date, '0', '0']
-print('\n\n')
-print(month_report_df)
-
+        # save to data frame
+        month_report_df.loc[len(month_report_df)] = [
+            temp_date, temp_collect, temp_due]
 
 # generate csv file, and remove index column
 csv_name = 'OTC_report.csv'
-#report_df.to_csv(csv_name, index=False)
+month_report_df.to_csv(csv_name, index=False)
