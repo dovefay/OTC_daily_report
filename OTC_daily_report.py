@@ -68,6 +68,7 @@ month_report_df = pd.DataFrame(columns=column_name)
 
 # loop check every day data
 for i in range(1, month_days+1):
+    # create the date, from day 1
     selected_date = last_row_date[:4]+'-' + \
         last_row_date[5:7]+'-'+str(i).zfill(2)
 
