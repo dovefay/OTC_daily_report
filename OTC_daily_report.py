@@ -89,5 +89,5 @@ for i in range(1, month_days+1):
             temp_date, temp_collect, temp_due]
 
 # generate csv file, and remove index column
-csv_name = 'OTC_report.csv'
+csv_name = '_OTC_report.csv'
 month_report_df.to_csv(csv_name, index=False)
